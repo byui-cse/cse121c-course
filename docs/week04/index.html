@@ -1,0 +1,51 @@
+<!-- uses https://highlightjs.org/
+-->
+
+<html>
+
+<head>
+	<link rel="shortcut icon" href="https://byui-cse.github.io/Language-Courses/site/images/fav.ico" type="image/x-i        con">
+        <script type="text/javascript">
+                 var codeType = "C++"
+        </script>
+        <script src="https://byui-cse.github.io/Language-Courses/site/highlight.pack.js"></script>
+        <link rel="stylesheet" href="https://byui-cse.github.io/Language-Courses/site/highlight_styles/xcode.css">
+        <link rel="stylesheet" href="https://byui-cse.github.io/Language-Courses/site/weekly.css">
+        <script type="text/javascript" src="https://byui-cse.github.io/Language-Courses/site/weekly.js"></script>
+	
+
+</head>
+
+<body onload="fetchSource()">
+<div class="hero-image">
+  <div class="hero-text">
+    <h1>CSE 121c: Week 04</h1>
+    <p>Representing Data</p>
+  </div>
+</div>
+	<h1>Beyond Arrays</h1>
+	<p>Arrays and lists are wonderful things. If you need to keep several things of the same type together so you can work with
+	them, an array or list is the way to go. But what about more complicated data? Consider this situation, you need to write 
+	code to track medications in a pharmacy. If you do this with arrays, your code looks something like this.
+	<p>put code description and example here</p>
+	<p>This code is intrinsically unstable. The data about the medications will become corrupted. It is too difficult to 
+	keep everything straight and lined up. Bugs will creap into this code and the application it is part of will fail. Thankfully,
+	the creators of C provided a way out of this mess...the struct.</p>	
+	<h3>Structs - keeping related data together </h3>
+	<p>Structs allow us to mingle different types of data together, and build relationships between the data. Using the 
+	medication example, you could create a struct called Medication that holdss the medication's name, its manufacturer, its best-by
+	date, and the amount of the medication on hand, all in one place for each medication. Then you can have a whole bunch of these 
+	medications in an array.</p>
+	<p>When you make a struct, you are creating a new type of thing in the C language that has never existed before. Now in addition to int,	double, and char, you have the type medication. You can use it just like any of the other types...paramters, variables, return 
+	types, etc.</p>
+
+	<a href="https://stackoverflow.com/questions/252780/why-should-we-typedef-a-struct-so-often-in-c">Structs and Typedefs</a>
+	<h3>Malloc and Free - creating new versions of things</h3>
+	<p>So here is a situation...you have a function that needs to compute a value that can't be returned. Remember C functions 
+	can only return one thing, and you need your function to return more than one thing...and the types aren't the same. Maybe
+	you need to generate an instance of a struct to be used elsewhere in your code, and you also need to return whether your 
+	function was able to successfully generate the struct. What will we do? Once again the C creators have come to our rescue.</p>
+
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+</body>
+</html>
