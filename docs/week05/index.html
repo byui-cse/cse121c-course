@@ -25,8 +25,184 @@
 </div>
 	<h1>Choice Making and Computational Flow</h1>
 	<h3>Logic Used in Computing</h3>
-	<h3>Switch and If</h3>
+	<p>Since our computers use a binary system, it is logical that the type of logic used when writing code is also binary. In other words, the logic
+		used includes only two possibilities when checking for truth, true or false. There are other types of logic. Signal processing is an example.
+	</p>
+	<p>As novice computer people, we think of the electrical signal coming through a network wire, or any other internal wire, as being either on or 
+		off coresponding to a 1 or a zero with the signal looking something like this.</p>
+	<img src="https://cdn.instructables.com/FE7/OVFQ/J4G58M8L/FE7OVFQJ4G58M8L.LARGE.jpg?auto=webp&fit=bounds"/>
+	<p>While we may think of the signal this way, it is not actually like this at all. Why? Because it is too dificult to get a signal to be 
+		truely off. The noise in the wire caused by electromagnetic induction makes it nearly impossible to have a completly 'off' in the signal. 
+		Instead, there would be a 'nearly off' signal and a decision would have to be made as to how strong an  the 'on' signal would have to be to 
+		indicate an actual on. This get's very nasty, since electromagnetic interference can also degrade a fully on signal so it would be 'nearly off'.  
+	</p>
+	<p>How then, does this work? How do electrical signals get sent down a wire inside a computer or across a network? The trick is to NOT use on and off. 
+		Instead, electrical signals are either + or -, not neutral (off).</p>
+	<img src="https://www.researchgate.net/profile/Mohamed_Salem47/publication/295276491/figure/fig8/AS:668240233639951@1536332295896/The-inverter-output-voltage-square-wave_W640.jpg"/>
+	<p>When using this system, the amplitude of the wave is irelevent...only 
+		whether part of the wave being sampled is negative or positive. If you want to know more about this, a good place to start would be 
+		to do a web search for "convert analog digital signal". You'll start on an interesting journey.</p>
+		This type of a signal transfer uses a logic with  
+		<a href="https://en.wikipedia.org/wiki/Many-valued_logic">many different kinds of true or false values</a>. 
+		Do not get caught up in the idea that for something to be logical there can only be  one true and one false. If you do, you will limit yourself. 
+		A simple three valued logic, used in computer databases and elsewhere, has three possible values of true, false, and undefined. 
+	</p>
+	
+
+	<h3>If and Switch</h3>
+
+	<p>The C language uses two value logic. Zero is false and anything that is not zero is true. This means you could write some code that looks something 
+	like this.</p>
+	<p><pre><code class="C++">int isTrue = 1;
+if(isTrue){
+    printf("It's true! :) \n");
+}
+else{
+    printf("It's false :( \n");
+}
+</code>
+<p>Notice that the conditional check is put between the ( and ) characters and that the code to be executed for each condition is put between the { and 
+	} characters for each condition.
+	</p>
+	</pre></p>
+	<p>Often, but not always, it is inconvinent to think if conditions using numbers rather than true or false. Because of this, there is a header file that defines true and 
+	false for you. All it really does is define a new bool type that's really an int, and a true that has a value of 1 and a false that has a value of 0. 
+	So...not much of a change, but after including 
+	<a href="https://gist.github.com/duckinator/303856">stdbool.h</a> your code can now look like this.</p>
+	<p><pre><code class="C++">bool isTrue = false;
+if(isTrue){
+    printf("It's true! :) \n");
+}
+else{
+    printf("It's false :( \n");
+}
+</code>
+	</pre></p>
+	<p>If you go back and look at the operators in the <a href="../week01/index.html"> reading for week 01</a>, you will find all of the boolean 
+	operators you are used to using when determining the truth or falsehood of a logic statement. There are also a large number of C tutorials for 
+	learning how to do <a href="https://www.khanacademy.org/computing/ap-computer-science-principles/programming-101/boolean-logic/a/compound-booleans-with-logical-operators">
+	compound boolean checks</a> like you see in many other languages.</p>
+
+	<p>But what if there are more than two possible situations you want to react to? Ahhhh....that's where else if comes in. Here is an example of 
+	making poor nutrition choices.</p>
+	<p><pre><code class="C++">if(cashOnHand > 3 && cashOnHand < 10){
+        printf("Buy rammen noodles.\n");
+    }
+    else if(cashOnHand <= 20){
+        printf("Buy a frozen pizza.\n");
+    }
+    else{
+        printf("Go out to eat.\n");
+    }
+}
+</code>
+	</pre></p>
+
+	<p>Sometimes an if statement, with all its conditions, possibilities, and ifs embeded inside of other ifs, can become too hard to read and consider.
+		Like many other languages, but not Python, C has an alternative to using if statements that can help solve this reading and cognition problem, 
+		the <a href="https://en.cppreference.com/w/c/language/switch">switch statement</a>. 
+		Switch statements allow you to branch which part of your code executes, as an if statement does, but on a format that, sometimes, is easier to read. 
+		Here is a very simplified example.
+	</p>
+		<p><pre><code class="C++">int cashOnHand;
+scanf("%d",&cashOnHand);
+switch (cashOnHand) {
+    case 5:
+        printf("not much\n");
+        break;
+    case 10:
+        printf("a little more\n");
+        break;
+    default:
+        printf("unacceptable number\n");
+        break;
+}
+</code>
+	</pre></p> 
+	<p>There are some important parts of switches that you MUST both be aware of and know. First, there is the call to switch. You must pass it a value. 
+		In C speak, we say we are 'switching on' the value, but not in the sense of switching on a light bulb. When we say we are switching 
+		on something, it means that is the thing we are going to examine for specific values. It would be like saying we would be 'ifing on' a value 
+		or set of values if we were using an if statement.
+	</p>
+	<p>Another important thing to remember is that in C, but not in all languages that have the concept of a switch statement, the type of things 
+		you can switch on are very limited. You can switch on an ints, shorts, longs, and you can switch on a character 
+		(which by the way is an int in C), or an enum (which is also an int in C). 
+		<a href="https://www.geeksforgeeks.org/interesting-facts-about-switch-statement-in-c/">That's it. That's all</a>.
+		You can not switch on booleans, structures, or anything else since they are not integral types of values. If something is an ntegeral type of 
+		value, it means it is numeric but isn't a floating point type or fixed point type like 2.5.
+	</p>
+	<p>Another thing to be aware of is how the <a href="https://beginnersbook.com/2017/08/cpp-switch-case/">break keyword</a> works. 
+		You leave it out when you want the code for consecutive cases to execute and put it in when you don't. A common noob mistake is to accidentally 
+		leave out a break when they intended to put one in. If you see your code executing statements from more than one case and you didn't intend 
+		for that to happen, you left out a break. Go fix the bug by adding one in.
+	</p>
+
 	<h3>Getting Loopy</h3>
+	<p>Conditional branching has a cousin...loops. If you think about loops for a bit you'll realize they continue under certain conditions. That means 
+		loops are also a type of conditional branching. There are <a href="https://www.geeksforgeeks.org/loops-in-c-and-cpp/"> three types of loops</a> 
+		in C, the for loop, the while loop, and the do-while loop. Each has a purpose so let's take a look at each type.
+	</p>
+	<h4>The For Loop</h4>
+	<p>For loops are used to iterate over arrays. That is their purpose. If you are trying to use a for loop for any other purpose, you picked the 
+		wrong loop type.
+	</p>
+	<p><pre><code class="C++">int marks[] = {4,5,6};
+    for(int i = 0; i < 3; i++){
+        printf("%d",marks[i]);
+    }
+</code>
+	</pre></p> 
+
+
+	<p><pre><code class="C++">int marks[] = {4,5,6};
+    for(int i = 0; i < 3; i++){
+        marks[i] = marks[i]*2;
+    }
+</code>
+	</pre></p> 
+
+	<h4>The While Loop</h4>
+	<p>
+		While loops are used to keep executing the same code over and over again as long as some state remains the same. For example, as long as 
+		the user hasn't selected an appropriate option, keep asking them for an option.
+	</p>
+	<p><pre><code class="C++">int numAttendies = 0;
+while (numAttendies < 100) {
+    printf("You need 100 attendies. You only have %d. Go find some more", numAttendies);
+    int moreAttendies;
+    scanf("%d",&moreAttendies);
+    numAttendies += moreAttendies;
+}
+</code>
+	</pre></p> 
+	<h4>The Do-While Loop</h4>
+	<p>
+		Do-while loops are like while loops in that they execute the same code repeatedly as long as some state remains the same. However, and this 
+		is a BIG whatever, they are dangerous. They execute the loop code BEFORE the condition is checked. This is kind of like running around with 
+		a blind flold on when you know there is a cliff nearby. For most of the steps you take you won't die. But there is that one step..... 
+	</p>
+	<p>
+		In the 21 years I, the author, have been writing code, there is only one time where I had to use a do-while loop, and that was because of a 
+		poor engineering choice someone else made elsewhere in the code base I was working on...an engineering choice I wasn't allowed change. All of the other times 
+		where a do-while might have been used, I was able to rethink the situation and find a small change that would make it possible to use a 
+		while loop instead. 
+	</p>
+	<p><pre><code class="C++">int choice;
+do {
+    printf("How many loop types do you think there are in C?");
+    scanf("%d",&choice);
+} while (choice != 3);
+</code>
+	</pre></p> 
+
+	<p><pre><code class="C++">int choice = 0;
+while (choice != 3) {
+    printf("How many loop types do you think there are in C?");
+    scanf("%d",&choice);
+}
+</code>
+	</pre></p>
+
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
 </body>
 </html>
