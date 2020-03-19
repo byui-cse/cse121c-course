@@ -26,25 +26,25 @@
 	<h1>Choice Making and Computational Flow</h1>
 	<h3>Logic Used in Computing</h3>
 	<p>Since our computers use a binary system, it is logical that the type of logic used when writing code is also binary. In other words, the logic
-		used includes only two possibilities when checking for truth, true or false. There are other types of logic. Signal processing is an example.
+		used when writing C includes only two possibilities when checking for truth. Those two options are true or false. Don't be fooled. There are other types of logic used in computing and in other programming languages. An example where you would use a logic that has more than pure true and pure false as options is when you write code or create hardware to do signal processing.
 	</p>
-	<p>As novice computer people, we think of the electrical signal coming through a network wire, or any other internal wire, as being either on or 
+	<p>As novice computer people, we think of the electrical signal coming through a wire, be it internal or external to the computer, as being either on or 
 		off coresponding to a 1 or a zero with the signal looking something like this.</p>
 	<img src="https://cdn.instructables.com/FE7/OVFQ/J4G58M8L/FE7OVFQJ4G58M8L.LARGE.jpg?auto=webp&fit=bounds"/>
 	<p>While we may think of the signal this way, it is not actually like this at all. Why? Because it is too dificult to get a signal to be 
-		truely off. The noise in the wire caused by electromagnetic induction makes it nearly impossible to have a completly 'off' in the signal. 
-		Instead, there would be a 'nearly off' signal and a decision would have to be made as to how strong an  the 'on' signal would have to be to 
+		truely off. The noise in the wire caused by electromagnetic induction makes it nearly impossible to have a completly 'off' signal. 
+		Instead, there would be a 'nearly off' signal and a design decision would have to be made by the engineers as to how strong an  the 'on' signal would have to be to 
 		indicate an actual on. This get's very nasty, since electromagnetic interference can also degrade a fully on signal so it would be 'nearly off'.  
 	</p>
-	<p>How then, does this work? How do electrical signals get sent down a wire inside a computer or across a network? The trick is to NOT use on and off. 
-		Instead, electrical signals are either + or -, not neutral (off).</p>
+	<p>How then, does signal processing work? How do electrical signals get sent down a wire inside a computer or across a network? The trick is to NOT use on and off. 
+		Instead, electrical signal voltages are either positive (+) or negative (-), not neutral (off).</p>
 	<img src="https://www.researchgate.net/profile/Mohamed_Salem47/publication/295276491/figure/fig8/AS:668240233639951@1536332295896/The-inverter-output-voltage-square-wave_W640.jpg"/>
-	<p>When using this system, the amplitude of the wave is irelevent...only 
-		whether part of the wave being sampled is negative or positive. If you want to know more about this, a good place to start would be 
-		to do a web search for "convert analog digital signal". You'll start on an interesting journey.</p>
-		This type of a signal transfer uses a logic with  
+	<p>When using this +/- type system, the amplitude (height) of the wave is irelevent...only 
+		whether current signal sample is negative or positive. If you want to know more about this, a good place to start would be 
+		to do a web search for 'convert analog digital signal'. You'll start on an interesting journey.</p>
+    <p>Electronic signal processing uses a logic with  
 		<a href="https://en.wikipedia.org/wiki/Many-valued_logic">many different kinds of true or false values</a>. 
-		Do not get caught up in the idea that for something to be logical there can only be  one true and one false. If you do, you will limit yourself. 
+		Do not get caught up in the idea that for something to be logical there can only be one true and one false. If you do, you will limit yourself. 
 		A simple three valued logic, used in computer databases and elsewhere, has three possible values of true, false, and undefined. 
 	</p>
 	
@@ -146,31 +146,79 @@ switch (cashOnHand) {
 	<p>For loops are used to iterate over arrays. That is their purpose. If you are trying to use a for loop for any other purpose, you picked the 
 		wrong loop type.
 	</p>
+    <p>Let's start off with an extremely simple situation where all you need to do is print out each item in an array of items. This example does nothing but print out each integer on its own line in the 
+    console.</p>
 	<p><pre><code class="C++">int marks[] = {4,5,6};
-    for(int i = 0; i < 3; i++){
-        printf("%d",marks[i]);
-    }
+for(int i = 0; i < 3; i++){
+    printf("%d",marks[i]);
+}
 </code>
 	</pre></p> 
+    <p>The C for loop has four parts. The first three are seperated by the ; character. The first part is an int variable that is used to keep 
+    	track of where we are in the array. By tradition the name of this variable is 'i' and stands for iterator. We are, after all, 
+    	<a href="https://dictionary.cambridge.org/us/dictionary/english/iterate"> iterating</a> over an array. As you can see in the code 
+    above, the int variable i is initially set to be 0. The next part is the continuation check. In the code above it is 'i &lt 3'. 
+	This means that when i is greater than or equal to 3, the loop will terminate.</p>
+    <p>The third part is 'i++'. This is the part of the code that updates the iterator so the loop will move through the array. The fourth 
+    part of the for loop is the code to execute each time i is less than 3. This code is between the { and } characters just like with the if 
+	statement you saw earlier.</p>
+    <p>It is important to understand the timing when each of these parts is executed so let me step you through it.</p>
+    <p>As the code is run, the first time the for loop is executed, i is set to zero and then i is checked to make sure it is less than 3. 
+    If it is less than three the code in between the { and } is executed. When the code reaches the } character, execution returns to the line 
+	including the 'for' declaration. This time, i is not set to 0. Instead, i++ is executed and the i &lt 3 check is done again. If i is still 
+	less than 3, the code in the fourth part is executed again. If not, the line of code AFTER the } character is executed since the loop is done.</p>
 
 
-	<p><pre><code class="C++">int marks[] = {4,5,6};
-    for(int i = 0; i < 3; i++){
-        marks[i] = marks[i]*2;
+
+
+    <p>While there is no built-in filter, map, or reduce functions in C, you can still do these things, but you will have to write code to do this 
+    yourself. Below is a naive example of how you could filter an array of integers so you end up with just evens in a new array called foundEvens.</p>
+
+<p><pre><code class="C++">int marks[] = {4,5,6,10,13,21,44};
+int evenMarks[7];
+int foundEvens = 0;
+for(int i = 0; i < 7; i++){
+    int aMark = marks[i];
+    if (aMark % 2 == 0) {
+        evenMarks[foundEvens] = aMark;
+        foundEvens++;
     }
+}
 </code>
-	</pre></p> 
-
+	</pre></p>
+    <p>Can you also map an array? You bet. In the example below all of the elements in the array are updated to be twice what they were before.</p>
+<p><pre><code class="C++">int marks[] = {4,5,6,10,13,21,44};
+int evenMarks[7];
+int foundEvens = 0;
+for(int i = 0; i < 7; i++){
+    int aMark = marks[i];
+    if (aMark % 2 == 0) {
+        evenMarks[foundEvens] = aMark;
+        foundEvens++;
+    }
+}
+</code>
+	</pre></p>
+    <p>If you want to reduce an array to one sensible value, you can do that to.</p>
+    <p><pre><code class="C++">int marks[] = {4,5,6,10,13,21,44};
+int sum = 0;
+for(int i = 0; i < 7; i++){
+    sum += marks[i];
+}
+</code>
+	</pre></p>
+    <p>So you can do map, filter, and reduce in C, but you have to write them yourself or find a non-standard library someone else has written and use that.</p>
 	<h4>The While Loop</h4>
 	<p>
 		While loops are used to keep executing the same code over and over again as long as some state remains the same. For example, as long as 
 		the user hasn't selected an appropriate option, keep asking them for an option.
 	</p>
+
 	<p><pre><code class="C++">int numAttendies = 0;
 while (numAttendies < 100) {
-    printf("You need 100 attendies. You only have %d. Go find some more", numAttendies);
+    printf("100 attendies are required to have this meeting. You currently have %d.", numAttendies);
     int moreAttendies;
-    scanf("%d",&moreAttendies);
+    scanf("Enter the number of additional attendies you've found: %d",&moreAttendies);
     numAttendies += moreAttendies;
 }
 </code>
@@ -178,14 +226,14 @@ while (numAttendies < 100) {
 	<h4>The Do-While Loop</h4>
 	<p>
 		Do-while loops are like while loops in that they execute the same code repeatedly as long as some state remains the same. However, and this 
-		is a BIG whatever, they are dangerous. They execute the loop code BEFORE the condition is checked. This is kind of like running around with 
+		is a BIG however, they are dangerous. They execute the loop code BEFORE the condition is checked. This is kind of like running around with 
 		a blind flold on when you know there is a cliff nearby. For most of the steps you take you won't die. But there is that one step..... 
 	</p>
 	<p>
 		In the 21 years I, the author, have been writing code, there is only one time where I had to use a do-while loop, and that was because of a 
 		poor engineering choice someone else made elsewhere in the code base I was working on...an engineering choice I wasn't allowed change. All of the other times 
 		where a do-while might have been used, I was able to rethink the situation and find a small change that would make it possible to use a 
-		while loop instead. 
+		while loop instead. So here is what a do-while loop looks like in C.
 	</p>
 	<p><pre><code class="C++">int choice;
 do {
@@ -194,7 +242,7 @@ do {
 } while (choice != 3);
 </code>
 	</pre></p> 
-
+<p>And here is a while loop that would do the same thing.</p>
 	<p><pre><code class="C++">int choice = 0;
 while (choice != 3) {
     printf("How many loop types do you think there are in C?");
