@@ -233,8 +233,15 @@ while (numAttendies < 100) {
 		In the 21 years I, the author, have been writing code, there is only one time where I had to use a do-while loop, and that was because of a 
 		poor engineering choice someone else made elsewhere in the code base I was working on...an engineering choice I wasn't allowed change. All of the other times 
 		where a do-while might have been used, I was able to rethink the situation and find a small change that would make it possible to use a 
-		while loop instead. So here is what a do-while loop looks like in C.
+		while loop instead. Here is a well thought out comment regarding do-while loops in a <a href="https://www.reddit.com/r/learnprogramming/comments/93gka0/why_dont_we_see_more_use_of_the_dowhile_loop/">redit</a> on the topic.</p>
+	<blockquote>The problem with do while is that it is syntactically unlike any other language construct in a confusing and ugly way.
+In every other case where a code block is conditional (if, for, while, else if), the condition being evaluated is read before the block it controls. When the reader hits an if statement, they know under what circumstances the enclosed code executes. Same for while.
+When a reader hits a do while block, they have no idea how long the enclosed code will execute. They have to scroll down to the bottom of the loop and check, then they can go back and read the code. This context switch is expensive for the reader. Scrolling around for no reason is annoying. Having code in a place you don't expect is annoying.
+Every time you write a do while loop, you should instead not do that and express it as a while loop. They're much clearer and lead to cleaner code.</blockquote>
+
+	<p>So here is what a do-while loop looks like in C.
 	</p>
+
 	<p><pre><code class="C++">int choice;
 do {
     printf("How many loop types do you think there are in C?");
